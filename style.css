@@ -20,30 +20,84 @@ body {
   padding: 0 14px;
 }
 
-/* ===== Header ===== */
-header {
+/* ===== Header (Light Glass / Frosted) ===== */
+header{
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+
+  /* стекло: полупрозрачный светлый слой */
+  background: rgba(255, 255, 255, 0.55);
+
+  /* блюр фона (главная магия) */
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+
+  /* тонкий “стеклянный” контур */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  /* мягкая тень, чтобы отделялся от контента */
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.10),
+    0 1px 0 rgba(255,255,255,0.35) inset;
+
+  /* как было: скрыт, пока hero в кадре */
   opacity: 0;
   pointer-events: none;
-  transition: opacity .3s;
+  transition: opacity .3s ease;
+
   z-index: 1000;
 }
-header.visible { opacity: 1; pointer-events: auto; }
 
-.header-content {
+/* появление */
+header.visible{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* декоративный блик сверху/по диагонали (модно + не режет глаз) */
+header::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.18) 35%,
+      rgba(255,255,255,0.05) 60%,
+      rgba(255,255,255,0.00) 100%);
+
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+/* на случай тёмной темы страницы: текст и чёткость */
+.header-content{
+  position: relative; /* чтобы текст был над ::before */
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 12px 0;
 }
 
-#header-name {
+#header-name{
   font-size: clamp(28px, 6vw, 72px);
   line-height: .96;
   font-weight: 100;
+
+  /* чуть контраста и “под стеклом” */
+  color: rgba(10, 12, 14, 0.92);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+}
+
+/* если у юзера снижены эффекты — выключаем blur */
+@media (prefers-reduced-transparency: reduce){
+  header{
+    background: rgba(255,255,255,0.92);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* ===== Hero ===== */
