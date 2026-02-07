@@ -20,84 +20,69 @@ body {
   padding: 0 14px;
 }
 
-/* ===== Header (Light Glass / Frosted) ===== */
+:root{
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-blur: 18px;
+  --glass-border: rgba(0,0,0,0.08);
+}
+
+/* чтобы не было белого фона страницы вокруг */
+html, body{
+  background: #eef1f6; /* базовая подложка страницы */
+}
+
+/* ===== Header (Glass) + Safe area fill ===== */
 header{
   position: fixed;
   top: 0; left: 0; right: 0;
 
-  /* стекло: полупрозрачный светлый слой */
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
 
-  /* блюр фона (главная магия) */
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  backdrop-filter: blur(18px) saturate(160%);
-
-  /* тонкий “стеклянный” контур */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-
-  /* мягкая тень, чтобы отделялся от контента */
+  border-bottom: 1px solid var(--glass-border);
   box-shadow:
     0 10px 30px rgba(0,0,0,0.10),
     0 1px 0 rgba(255,255,255,0.35) inset;
 
-  /* как было: скрыт, пока hero в кадре */
   opacity: 0;
   pointer-events: none;
   transition: opacity .3s ease;
-
   z-index: 1000;
 }
+header.visible{ opacity: 1; pointer-events: auto; }
 
-/* появление */
-header.visible{
-  opacity: 1;
-  pointer-events: auto;
+/* ВАЖНО: заполняем зону под статус-баром тем же стеклом */
+header::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  top: calc(-1 * env(safe-area-inset-top));
+  height: env(safe-area-inset-top);
+
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* декоративный блик сверху/по диагонали (модно + не режет глаз) */
-header::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.18) 35%,
-      rgba(255,255,255,0.05) 60%,
-      rgba(255,255,255,0.00) 100%);
-
-  mix-blend-mode: overlay;
-  opacity: 0.55;
-}
-
-/* на случай тёмной темы страницы: текст и чёткость */
+/* чтобы контент не заезжал под хедер на мобиле */
 .header-content{
-  position: relative; /* чтобы текст был над ::before */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   padding: 12px 0;
+  padding-top: calc(12px + env(safe-area-inset-top));
+  position: relative;
 }
 
 #header-name{
   font-size: clamp(28px, 6vw, 72px);
   line-height: .96;
   font-weight: 100;
-
-  /* чуть контраста и “под стеклом” */
-  color: rgba(10, 12, 14, 0.92);
+  color: rgba(10,12,14,0.92);
   text-shadow: 0 1px 0 rgba(255,255,255,0.55);
-}
-
-/* если у юзера снижены эффекты — выключаем blur */
-@media (prefers-reduced-transparency: reduce){
-  header{
-    background: rgba(255,255,255,0.92);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
 }
 
 /* ===== Hero ===== */
