@@ -1,0 +1,15 @@
+{
+  "short_name": "Thelema",
+  "name": "Thelema: Act of Will",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/will/index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000"
+}
