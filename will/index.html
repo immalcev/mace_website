@@ -2,59 +2,78 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="manifest" href="manifest.json">
-    <title>Thelema One</title>
+    <title>Will</title>
     <style>
-        body { background: #000; color: #3b82f6; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center; overflow: hidden; }
-        .energy-orbit { position: relative; width: 250px; height: 250px; border: 2px solid #1e3a8a; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px #1e3a8a; }
-        #energy-fill { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 4px solid #3b82f6; clip-path: inset(50% 0 0 0); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 10px #3b82f6); }
-        .percent { font-size: 3rem; font-weight: bold; z-index: 10; color: #fff; text-shadow: 0 0 10px #3b82f6; }
-        .status { margin-top: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
-        #tg-login-container { margin-top: 30px; }
-        .quote { position: absolute; bottom: 40px; font-style: italic; font-size: 0.7rem; opacity: 0.6; padding: 0 20px; }
+        :root { --accent: #ffffff; --bg: #000000; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background: var(--bg); color: var(--accent); 
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; height: 100vh;
+        }
+        .header { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; margin-top: 40px; }
+        
+        .main-display { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+        .energy-label { font-size: 12px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
+        .energy-value { font-size: 120px; font-weight: 200; line-height: 1; letter-spacing: -5px; }
+        
+        .status-bar { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-bottom: 40px; }
+        .status-text { font-size: 14px; font-weight: 400; }
+
+        #tg-login-container { display: flex; justify-content: flex-start; min-height: 40px; }
+        
+        /* Убираем все лишнее свечение */
+        #energy-fill { display: none; } 
     </style>
 </head>
 <body>
 
-    <div class="energy-orbit">
-        <div id="energy-fill"></div>
-        <div class="percent"><span id="energy-val">0</span>%</div>
+    <div class="header">Thelema / Observer Mode</div>
+
+    <div class="main-display">
+        <div class="energy-label">Current Energy</div>
+        <div class="energy-value"><span id="energy-val">0</span>%</div>
     </div>
     
-    <div class="status" id="status-text">Наблюдатель не авторизован</div>
+    <div class="status-bar">
+        <div class="status-text" id="status-text">Identification required</div>
+    </div>
 
     <div id="tg-login-container">
         <script async src="https://telegram.org/js/telegram-widget.js?22" 
-                data-telegram-login="thelemaonebot" 
+                data-telegram-login="Thelema_Orbit_Bot" 
                 data-size="large" 
                 data-onauth="onTelegramAuth(user)" 
                 data-request-access="write"></script>
     </div>
 
-    <div class="quote">"Every man and every woman is a star" [cite: 485]</div>
-
     <script>
         function onTelegramAuth(user) {
-            document.getElementById('tg-login-container').style.display = 'none';
-            document.getElementById('status-text').innerText = "Воля " + user.first_name + " в центре";
-            calculateSmartEnergy(user);
-        }
-
-        function calculateSmartEnergy(user) {
-            // "Умная" логика: привязка к твоему режиму
-            let baseEnergy = 50; 
+            document.getElementById('tg-login-container').style.opacity = '0';
+            setTimeout(() => document.getElementById('tg-login-container').style.display = 'none', 300);
+            document.getElementById('status-text').innerText = "Subject: " + user.first_name;
+            
+            // "Умный" расчет энергии
             let hour = new Date().getHours();
+            let energy = 50; 
+            if (hour >= 6 && hour <= 9) energy = 85; // Бонус за утро
             
-            // Бонус за ранний подъем (6:00 - 8:00) [cite: 268, 269]
-            if (hour >= 6 && hour <= 8) baseEnergy += 20; 
-            
-            updateUI(baseEnergy);
+            animateValue("energy-val", 0, energy, 1500);
         }
 
-        function updateUI(val) {
-            document.getElementById('energy-val').innerText = val;
-            document.getElementById('energy-fill').style.clipPath = `inset(${100 - val}% 0 0 0)`;
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) { window.requestAnimationFrame(step); }
+            };
+            window.requestAnimationFrame(step);
         }
     </script>
 </body>
