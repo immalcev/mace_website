@@ -2,26 +2,40 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will | Mayhem Energy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Will Project">
+    <meta name="theme-color" content="#F8F6F0">
+    
+    <title>Will Project | Mayhem Design</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="mayhem-container">
-        <h1 class="glitch" data-text="ENERGY_LEVEL">ENERGY_LEVEL</h1>
-        
-        <div class="energy-widget">
-            <div class="energy-bar">
-                <div id="energy-fill" class="fill"></div>
-            </div>
-            <div class="stats">
-                <span id="step-count">0</span> / 10000 STEPS
-            </div>
-        </div>
 
-        <div class="status-box">
-            <p id="status-text">SYSTEM_READY</p>
-            <p class="sub-text">SYNCED_VIA_APPLE_WATCH</p>
+    <div id="auth-section" class="container">
+        <div class="header">MAYHEM<br>IDENTITY</div>
+        <button class="btn-action" onclick="registerUser()">Войти или зарегистрироваться</button>
+    </div>
+
+    <div id="main-content" class="container" style="display: none;">
+        <div class="header">MAYHEM<br>CONTROL</div>
+
+        <div class="energy-widget">
+            <div class="status-label">Уровень Энергии (Apple Watch)</div>
+            <div id="energy-display" class="energy-value">0%</div>
+            <div id="status-text" class="status-label">Статус: Ожидание данных</div>
+        </div>
+        
+        <div class="observer-info status-label">Наблюдатель: <span id="user-display"></span></div>
+    </div>
+
+    <div id="install-modal" style="display: none;">
+        <div class="modal-content">
+            <strong>УСТАНОВКА АРТЕФАКТА</strong>
+            <p>Чтобы закрепить свою Волю на экране: нажми «Поделиться» в Safari и выбери «На экран Домой».</p>
+            <button onclick="closeModal()">ПОНЯТНО</button>
         </div>
     </div>
 
