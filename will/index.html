@@ -6,39 +6,65 @@
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Will Project">
+    <meta name="apple-mobile-web-app-title" content="Mayhem Control">
     <meta name="theme-color" content="#F8F6F0">
+
+    <title>Mayhem Control</title>
     
-    <title>Will Project | Mayhem Design</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="auth-section" class="container">
-        <div class="header">MAYHEM<br>IDENTITY</div>
-        <button class="btn-action" onclick="registerUser()">Войти или зарегистрироваться</button>
+    <div id="auth-screen" class="hidden">
+        <div class="header">Authentication Required</div>
+        <div style="margin-top: 200px;" id="tg-widget-container"></div>
     </div>
 
-    <div id="main-content" class="container" style="display: none;">
-        <div class="header">MAYHEM<br>CONTROL</div>
+    <div id="main-screen" class="hidden">
+        <div class="logout-btn" onclick="logout()">Logout / Switch Account</div>
+        <div class="header">Thelema / Observer Mode</div>
 
-        <div class="energy-widget">
-            <div class="status-label">Уровень Энергии (Apple Watch)</div>
-            <div id="energy-display" class="energy-value">0%</div>
-            <div id="status-text" class="status-label">Статус: Ожидание данных</div>
+        <div class="energy-container">
+            <div class="rings-btn" onclick="toggleModal('device-modal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9" opacity="0.3"/>
+                    <circle cx="12" cy="12" r="6" opacity="0.6"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </div>
+            <div class="energy-label">Current Energy</div>
+            <div class="energy-value"><span id="energy-val">0</span>%</div>
         </div>
-        
-        <div class="observer-info status-label">Наблюдатель: <span id="user-display"></span></div>
+
+        <div class="tasks-container" id="tasks-list"></div>
+
+        <div class="input-area">
+            <input type="text" id="task-input" placeholder="Скажи Gemini, что ты сделал...">
+            <button class="voice-btn" id="voice-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 18v5M8 23h8"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
-    <div id="install-modal" style="display: none;">
+    <div id="device-modal" class="modal">
         <div class="modal-content">
-            <strong>УСТАНОВКА АРТЕФАКТА</strong>
-            <p>Чтобы закрепить свою Волю на экране: нажми «Поделиться» в Safari и выбери «На экран Домой».</p>
-            <button onclick="closeModal()">ПОНЯТНО</button>
+            <div class="energy-label" style="margin-bottom: 20px;">Mayhem Control / Devices</div>
+            <p style="font-size: 14px;">Синхронизация колец активности.</p>
+            <button class="btn-black" onclick="connectDevice()">Добавить кольца</button>
+            <button class="btn-black" style="background:none; color:#000; border:1px solid #000; margin-top:10px;" onclick="toggleModal('device-modal')">Закрыть</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
