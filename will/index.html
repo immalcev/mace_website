@@ -32,51 +32,60 @@
         }
         .status-text { font-size: 13px; opacity: 0.8; margin-bottom: 20px; }
 
-        /* Контейнер для кнопки со свечением */
         #tg-login-container { 
-            position: absolute; 
-            bottom: 60px;
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            width: 220px;
-            height: 60px;
-            border-radius: 30px;
-            overflow: hidden;
-        }
+        position: absolute; 
+        bottom: 80px;
+        width: 240px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
 
-        /* Анимированная рамка-свечение */
-        #tg-login-container::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 400%;
-            background: conic-gradient(transparent, transparent, transparent, var(--glow));
-            animation: rotate 4s linear infinite;
-        }
+    /* Наше визуальное перекрытие */
+    .custom-login-btn {
+        position: absolute;
+        inset: 0;
+        background: #000; /* Полностью черный фон */
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+        pointer-events: none; /* Клик проходит сквозь текст на настоящую кнопку */
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ffffff;
+        transition: all 0.3s ease;
+    }
 
-        /* Внутренняя маска, чтобы кнопка казалась частью фона */
-        #tg-login-container::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: var(--bg);
-            border-radius: 28px;
-        }
+    /* Анимированное свечение по контуру */
+    .btn-glow {
+        position: absolute;
+        inset: -2px;
+        background: conic-gradient(from 0deg, transparent, #3b82f6, transparent);
+        border-radius: 6px;
+        z-index: 15;
+        animation: rotateGlow 4s linear infinite;
+    }
 
-        /* Делаем сам виджет более подходящим по стилю */
-        iframe#telegram-login-ThelemaOneBot {
-            position: relative;
-            z-index: 10;
-            filter: grayscale(1) contrast(1.2) brightness(0.8);
-            mix-blend-mode: screen;
-        }
+    @keyframes rotateGlow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    /* Делаем оригинальный виджет невидимым, но кликабельным */
+    iframe[id^="telegram-login"] {
+        position: relative;
+        z-index: 25;
+        opacity: 0.01; /* Почти прозрачный, но рабочий */
+        transform: scale(3); /* Увеличиваем область клика */
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
 
@@ -92,12 +101,15 @@
     </div>
 
     <div id="tg-login-container">
-        <script async src="https://telegram.org/js/telegram-widget.js?22" 
-                data-telegram-login="ThelemaOneBot" 
-                data-size="large" 
-                data-onauth="onTelegramAuth(user)" 
-                data-request-access="write"></script>
-    </div>
+    <div class="btn-glow"></div>
+    <div class="custom-login-btn">Войти через Telegram</div>
+    
+    <script async src="https://telegram.org/js/telegram-widget.js?22" 
+            data-telegram-login="ThelemaOneBot" 
+            data-size="large" 
+            data-onauth="onTelegramAuth(user)" 
+            data-request-access="write"></script>
+</div>
 
     <script>
         function onTelegramAuth(user) {
