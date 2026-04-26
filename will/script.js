@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Инициализация Gemini
-const API_KEY = "ТВОЙ_КЛЮЧ"; // Вставь свой ключ здесь
+const API_KEY = "AIzaSyDHtKWjiBA0izEaQyXEzmPLYBn3AZhWpu8"; // Вставь свой ключ здесь
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
