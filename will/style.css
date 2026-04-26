@@ -1,0 +1,58 @@
+body {
+    background-color: #000;
+    color: #f8f6f0; /* Тот самый оттенок, который ты уточнял */
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.mayhem-container {
+    text-align: center;
+    border: 1px solid #333;
+    padding: 40px;
+    position: relative;
+}
+
+.glitch {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    letter-spacing: 5px;
+}
+
+.energy-bar {
+    width: 300px;
+    height: 10px;
+    border: 1px solid #f8f6f0;
+    margin: 20px auto;
+    position: relative;
+}
+
+.fill {
+    height: 100%;
+    background-color: #f8f6f0;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    box-shadow: 0 0 15px rgba(248, 246, 240, 0.5);
+}
+
+.stats {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.status-box {
+    margin-top: 30px;
+    border-top: 1px dashed #333;
+    padding-top: 10px;
+}
+
+.sub-text {
+    font-size: 0.6rem;
+    color: #666;
+}
