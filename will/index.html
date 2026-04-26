@@ -2,138 +2,139 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Will</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Will Project">
+    
+    <title>Will Project | Mayhem Design</title>
+    
     <style>
-        :root { --accent: #ffffff; --bg: #000000; --glow: #3b82f6; }
-        body { 
-            background: var(--bg); color: var(--accent); 
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column; 
-            align-items: center; justify-content: center;
-            height: 100vh; width: 100vw;
+        :root {
+            --bg-color: #F8F6F0; /* Твой скорректированный параметр фона */
+            --accent-color: #000000;
+            --text-main: #1a1a1a;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        .header {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            border-left: 8px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .energy-widget {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid var(--accent-color);
+            box-shadow: 10px 10px 0px var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        .energy-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .status-label {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .btn-register {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.1s;
+        }
+
+        .btn-register:active {
+            transform: scale(0.98);
+        }
+
+        /* Инструкция для установки */
+        .install-hint {
+            margin-top: auto;
+            font-size: 0.75rem;
             text-align: center;
+            color: #888;
+            padding: 20px;
         }
-        .header { 
-            position: absolute; top: 60px;
-            font-size: 10px; text-transform: uppercase; 
-            letter-spacing: 3px; opacity: 0.4; 
-        }
-        
-        .main-display { margin-bottom: 40px; }
-        .energy-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; opacity: 0.6; }
-        .energy-value { font-size: clamp(80px, 20vw, 140px); font-weight: 200; line-height: 1; letter-spacing: -6px; }
-        
-        .status-bar { 
-            position: absolute; bottom: 140px;
-            width: 80%; border-top: 1px solid rgba(255,255,255,0.1); 
-            padding-top: 20px; 
-        }
-        .status-text { font-size: 13px; opacity: 0.8; margin-bottom: 20px; }
-
-        #tg-login-container { 
-        position: absolute; 
-        bottom: 80px;
-        width: 240px;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    /* Наше визуальное перекрытие */
-    .custom-login-btn {
-        position: absolute;
-        inset: 0;
-        background: #000; /* Полностью черный фон */
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 4px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 20;
-        pointer-events: none; /* Клик проходит сквозь текст на настоящую кнопку */
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #ffffff;
-        transition: all 0.3s ease;
-    }
-
-    /* Анимированное свечение по контуру */
-    .btn-glow {
-        position: absolute;
-        inset: -2px;
-        background: conic-gradient(from 0deg, transparent, #3b82f6, transparent);
-        border-radius: 6px;
-        z-index: 15;
-        animation: rotateGlow 4s linear infinite;
-    }
-
-    @keyframes rotateGlow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    /* Делаем оригинальный виджет невидимым, но кликабельным */
-    iframe[id^="telegram-login"] {
-        position: relative;
-        z-index: 25;
-        opacity: 0.01; /* Почти прозрачный, но рабочий */
-        transform: scale(3); /* Увеличиваем область клика */
-        cursor: pointer;
-    }
-</style>
+    </style>
 </head>
 <body>
 
-    <div class="header">Thelema / Observer Mode</div>
+    <div class="container">
+        <div class="header">MAYHEM<br>CONTROL</div>
 
-    <div class="main-display">
-        <div class="energy-label">Current Energy</div>
-        <div class="energy-value"><span id="energy-val">0</span>%</div>
-    </div>
-    
-    <div class="status-bar">
-        <div class="status-text" id="status-text">Identification required</div>
+        <div class="energy-widget">
+            <div class="status-label">Уровень Энергии (Apple Watch)</div>
+            <div id="energy-display" class="energy-value">0%</div>
+            <div class="status-label">Статус: Ожидание данных</div>
+        </div>
+
+        <button class="btn-register" onclick="registerUser()">Зарегистрироваться в системе</button>
     </div>
 
-    <div id="tg-login-container">
-    <div class="btn-glow"></div>
-    <div class="custom-login-btn">Войти через Telegram</div>
-    
-    <script async src="https://telegram.org/js/telegram-widget.js?22" 
-            data-telegram-login="ThelemaOneBot" 
-            data-size="large" 
-            data-onauth="onTelegramAuth(user)" 
-            data-request-access="write"></script>
-</div>
+    <div class="install-hint">
+        Чтобы использовать как приложение:<br>
+        Нажми <strong>«Поделиться»</strong> в Safari → <strong>«На экран „Домой“»</strong>
+    </div>
 
     <script>
-        function onTelegramAuth(user) {
-            document.getElementById('tg-login-container').style.display = 'none';
-            document.getElementById('status-text').innerText = "Observer: " + user.first_name;
-            
-            let hour = new Date().getHours();
-            let energy = 50; 
-            if (hour >= 6 && hour <= 9) energy = 85; 
-            
-            animateValue("energy-val", 0, energy, 2000);
+        // Функция регистрации (базовая логика)
+        function registerUser() {
+            const userName = prompt("Введи свой ID или имя для регистрации:");
+            if (userName) {
+                localStorage.setItem('user_id', userName);
+                alert("Регистрация завершена. Твой ID: " + userName);
+                updateDisplay();
+            }
         }
 
-        function animateValue(id, start, end, duration) {
-            let obj = document.getElementById(id);
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) { window.requestAnimationFrame(step); }
-            };
-            window.requestAnimationFrame(step);
+        // Обновление данных из URL (для интеграции с Командами iOS)
+        function updateDisplay() {
+            const params = new URLSearchParams(window.location.search);
+            const steps = params.get('steps');
+            if (steps) {
+                const energy = Math.min(Math.round(steps / 100), 100);
+                document.getElementById('energy-display').innerText = energy + '%';
+            }
         }
+
+        window.onload = updateDisplay;
     </script>
 </body>
 </html>
