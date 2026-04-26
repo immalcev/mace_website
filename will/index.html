@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Will</title>
     <style>
-        :root { --accent: #ffffff; --bg: #000000; }
+        :root { --accent: #ffffff; --bg: #000000; --glow: #3b82f6; }
         body { 
             background: var(--bg); color: var(--accent); 
             font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -26,15 +26,55 @@
         .energy-value { font-size: clamp(80px, 20vw, 140px); font-weight: 200; line-height: 1; letter-spacing: -6px; }
         
         .status-bar { 
-            position: absolute; bottom: 120px;
+            position: absolute; bottom: 140px;
             width: 80%; border-top: 1px solid rgba(255,255,255,0.1); 
             padding-top: 20px; 
         }
         .status-text { font-size: 13px; opacity: 0.8; margin-bottom: 20px; }
 
+        /* Контейнер для кнопки со свечением */
         #tg-login-container { 
-            position: absolute; bottom: 60px;
-            display: flex; justify-content: center; width: 100%;
+            position: absolute; 
+            bottom: 60px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            width: 220px;
+            height: 60px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        /* Анимированная рамка-свечение */
+        #tg-login-container::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 400%;
+            background: conic-gradient(transparent, transparent, transparent, var(--glow));
+            animation: rotate 4s linear infinite;
+        }
+
+        /* Внутренняя маска, чтобы кнопка казалась частью фона */
+        #tg-login-container::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--bg);
+            border-radius: 28px;
+        }
+
+        /* Делаем сам виджет более подходящим по стилю */
+        iframe#telegram-login-ThelemaOneBot {
+            position: relative;
+            z-index: 10;
+            filter: grayscale(1) contrast(1.2) brightness(0.8);
+            mix-blend-mode: screen;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
