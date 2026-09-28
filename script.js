@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         images: []
       };
     }
-    postsMap[key].images.push({ src: `/assets/${file}`, idx: isNaN(index) ? 0 : index });
+    postsMap[key].images.push({ src: `./assets/${file}`, idx: isNaN(index) ? 0 : index });
   });
 
   // Сортируем изображения внутри поста
