@@ -416,11 +416,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // (ниже — твой исходный код модалки, без функциональных изменений)
 (function(){
   const BRIEFS = {
-    logo: "/briefs/brief-logo.pdf",
-    font: "/briefs/brief-font.pdf",
-    pattern: "/briefs/brief-pattern.pdf",
-    web: "/briefs/brief-web.pdf",
-    general: "/briefs/brief-general.pdf",
+    logo: "./briefs/brief-logo.pdf",
+    font: "./briefs/brief-font.pdf",
+    pattern: "./briefs/brief-pattern.pdf",
+    web: "./briefs/brief-web.pdf",
+    general: "./briefs/brief-general.pdf",
   };
   const $ = (id)=>document.getElementById(id);
   const isValidTg = (u)=>/^[a-zA-Z0-9_]{5,32}$/.test(u);
